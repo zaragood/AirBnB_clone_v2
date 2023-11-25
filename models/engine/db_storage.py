@@ -39,6 +39,7 @@ class DBStorage:
         else:
             query = self.__session.query(State).all()
             query.extend(self.__session.query(City).all())
+            query.extend(self.__session.query(User).all())
         return {f"{type(obj).__name__}.{obj.id}": obj for obj in query}
 
     def new(self, obj):
