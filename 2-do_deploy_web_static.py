@@ -27,12 +27,12 @@ def do_deploy(archive_path):
         run("sudo tar -xzf /tmp/{} -C {}".format(archive_fn, folder_name))
 
         # Remove the archive from the web server
-        run("sudo rm /tmp/{}".format(archive_fn))
+        run("sudo rm -rf /tmp/{}".format(archive_fn))
 
         # Delete the symbolic link /data/web_static/current
         current_link_path = "/data/web_static/current"
         if exists(current_link_path):
-            sudo("rm {}".format(current_link_path))
+            sudo("rm -rf {}".format(current_link_path))
 
         # Create a new symbolic link to the new version of the code
         sudo("ln -s {} {}".format(folder_name, current_link_path))
