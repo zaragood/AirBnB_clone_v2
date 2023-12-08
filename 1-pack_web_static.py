@@ -17,13 +17,11 @@ from fabric.api import local
 
 
 def do_pack():
-    """ This defines a function named do_pack."""
-
     """ Generates a unique file name for the tarball based
     on the current date and time.
     """
     d = datetime.now()
-    fp = f"web_static_{d.year}{d.month}{d.day}{d.hour}{d.minute}{d.second}.tgz"
+    fp = f"versions/web_static_{d.year}{d.month}{d.day}{d.hour}{d.minute}{d.second}.tgz"
 
     """ Checks if the "versions" directory exists. If not, it attempts
     to create it using the local function from Fabric.
