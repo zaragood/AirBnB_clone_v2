@@ -21,7 +21,12 @@ def do_pack():
     on the current date and time.
     """
     d = datetime.now()
-    fp = f"versions/web_static_{d.year}{d.month}{d.day}{d.hour}{d.minute}{d.second}.tgz"
+    fp = "versions/web_static_{}{}{}{}{}{}.tgz".format(d.year,
+                                                       d.month,
+                                                       d.day,
+                                                       d.hour,
+                                                       d.minute,
+                                                       d.second)
 
     """ Checks if the "versions" directory exists. If not, it attempts
     to create it using the local function from Fabric.
@@ -35,5 +40,5 @@ def do_pack():
     Creates a tarball (tar -czvf)
     """
     if local(f"tar -cvzf {fp} web_static").failed is True:
-            return None
+        return None
     return fp
