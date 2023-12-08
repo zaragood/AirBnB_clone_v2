@@ -23,19 +23,25 @@ def do_deploy(archive_path):
         # Extract the archive to /data/web_static/releases/
         archive_fn = archive_path.split("/")[-1]
         folder_name = "/data/web_static/releases/" + archive_fn.split(".")[0]
-        run("sudo mkdir -p {}".format(folder_name))
-        run("sudo tar -xzf /tmp/{} -C {}".format(archive_fn, folder_name))
+        run("mkdir -p {}".format(folder_name))
+        run("tar -xzf /tmp/{} -C {}".format(archive_fn, folder_name))
 
         # Remove the archive from the web server
-        run("sudo rm -rf /tmp/{}".format(archive_fn))
+        run("rm /tmp/{}".format(archive_fn))
+
+        # Move contents to the right place
+        run("mv {}/web_static/* {}".format(folder_name, folder_name))
+
+        # Remove the temporary web_static folder
+        run("rm -rf {}/web_static".format(folder_name))
 
         # Delete the symbolic link /data/web_static/current
         current_link_path = "/data/web_static/current"
         if exists(current_link_path):
-            sudo("rm -rf {}".format(current_link_path))
+            sudo("rm {}".format(current_link_path))
 
         # Create a new symbolic link to the new version of the code
-        sudo("ln -s {} {}".format(folder_name, current_link_path))
+        run("ln -s {} {}".format(folder_name, current_link_path))
 
         return True
 
