@@ -7,6 +7,8 @@ from fabric.api import env, hosts, sudo, put
 
 
 env.hosts = ['54.146.76.48', '100.25.192.141']
+
+
 def do_deploy(archive_path):
     """
     Distributes an archive to web servers.
@@ -18,14 +20,14 @@ def do_deploy(archive_path):
         # Upload the archive to /tmp/ directory on the web server
         put(archive_path, "/tmp/")
 
-        # Extract the archive to /data/web_static/releases/<filename without extension>
-        archive_filename = archive_path.split("/")[-1]
-        folder_name = "/data/web_static/releases/" + archive_filename.split(".")[0]
+        # Extract the archive to /data/web_static/releases/
+        archive_fn = archive_path.split("/")[-1]
+        folder_name = "/data/web_static/releases/" + archive_fn.split(".")[0]
         run("sudo mkdir -p {}".format(folder_name))
-        run("sudo tar -xzf /tmp/{} -C {}".format(archive_filename, folder_name))
+        run("sudo tar -xzf /tmp/{} -C {}".format(archive_fn, folder_name))
 
         # Remove the archive from the web server
-        run("sudo rm /tmp/{}".format(archive_filename))
+        run("sudo rm /tmp/{}".format(archive_fn))
 
         # Delete the symbolic link /data/web_static/current
         current_link_path = "/data/web_static/current"
