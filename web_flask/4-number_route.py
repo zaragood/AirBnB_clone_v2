@@ -28,12 +28,12 @@ def c(text):
 
 @app.route("/python/<text>", strict_slashes=False)
 def python(text='cool'):
-        return f"Python {escape(text.replace('_', ' '))}"
+    return f"Python {escape(text.replace('_', ' '))}"
 
 
 @app.route("/number/<int:n>", strict_slashes=False)
 def number(n):
-        return f"{n} is a number"
+    return f"{n} is a number"
 
 
 if __name__ == "__main__":
