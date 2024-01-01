@@ -35,7 +35,7 @@ class DBStorage:
     def all(self, cls=None):
         """query all data base"""
         if cls:
-            query = self.__session.query(eval(cls)).all()
+            query = self.__session.query(cls).all()
         else:
             query = self.__session.query(State).all()
             query.extend(self.__session.query(City).all())
@@ -64,3 +64,10 @@ class DBStorage:
         session_factory = sessionmaker(bind=self.__engine, expire_on_commit=False, )
         Session = scoped_session(session_factory)
         self.__session = Session()
+
+    def close(self):
+        """ public method def close(self):: call remove() method
+        on the private session attribute (self.__session)
+        """
+        if self.__session:
+            self.__session.close()
