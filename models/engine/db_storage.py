@@ -2,6 +2,7 @@
 """creating a new engine de_storage"""
 import os
 from models.base_model import Base
+import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
@@ -69,5 +70,4 @@ class DBStorage:
         """ public method def close(self):: call remove() method
         on the private session attribute (self.__session)
         """
-        if self.__session:
-            self.__session.close()
+        self.__session.close()
